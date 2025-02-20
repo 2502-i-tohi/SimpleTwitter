@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 
+import chapter6.beans.User;
 import chapter6.logging.InitApplication;
 import chapter6.service.UserService;
 
