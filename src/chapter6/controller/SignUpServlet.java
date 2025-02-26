@@ -62,6 +62,8 @@ public class SignUpServlet extends HttpServlet {
             request.getRequestDispatcher("signup.jsp").forward(request, response);
             return;
         }
+        String account = user.getAccount();
+        new UserService().select(account);
         new UserService().insert(user);
         response.sendRedirect("./");
     }
