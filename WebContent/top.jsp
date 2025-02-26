@@ -66,7 +66,8 @@
 						href="./?user_id=<c:out value="${message.userId}"/> "> <c:out
 								value="${message.account}" />
 					</a>
-					</span> <span class="name"><c:out value="${message.name}" /></span>
+					</span>
+					<span class="name"><c:out value="${message.name}" /></span>
 				</div>
 				<div class="text">
 					<c:out value="${message.text}" />
