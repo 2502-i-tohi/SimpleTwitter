@@ -109,7 +109,7 @@ public class MessageService {
 		}
 	}
 
-	public void delete(int messageId) {
+	public void delete(String messageId) {
 
 		log.info(new Object() {
 		}.getClass().getEnclosingClass().getName() +
@@ -119,7 +119,13 @@ public class MessageService {
 		Connection connection = null;
 		try {
 			connection = getConnection();
-			new MessageDao().delete(connection, messageId);
+
+			Integer id = null;
+			if (!StringUtils.isEmpty(messageId)) {
+				id = Integer.parseInt(messageId);
+			}
+
+			new MessageDao().delete(connection, id);
 			commit(connection);
 		} catch (RuntimeException e) {
 			rollback(connection);
