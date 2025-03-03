@@ -4,6 +4,7 @@ import static chapter6.utils.CloseableUtil.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,13 +74,66 @@ public class MessageDao {
     	try {
     		StringBuilder sql = new StringBuilder();
     		sql.append("DELETE FROM messages ");
-    		sql.append(" WHERE id = ? ");
+    		sql.append("WHERE id = ?");
 
     		ps = connection.prepareStatement(sql.toString());
 
     		ps.setInt(1, id);
 
     		ps.executeUpdate();
+    	} catch (SQLException e) {
+    		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+    		throw new SQLRuntimeException(e);
+    	} finally {
+    		close(ps);
+    	}
+    }
+
+    public void edit(Connection connection, Message message) {
+
+    	log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+    			" : " + new Object(){}.getClass().getEnclosingMethod().getName());
+
+    	PreparedStatement ps = null;
+    	try {
+    		StringBuilder sql = new StringBuilder();
+    		sql.append("UPDATE messages ");
+    		sql.append("SET text = ? ");
+    		sql.append("WHERE id = ?");
+
+    		ps = connection.prepareStatement(sql.toString());
+
+    		ps.setString(1, message.getText());
+    		ps.setInt(2, message.getUserId());
+
+    		ps.executeUpdate();
+    	} catch (SQLException e) {
+    		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+    		throw new SQLRuntimeException(e);
+    	} finally {
+    		close(ps);
+    	}
+    }
+
+    public String selectedit(Connection connection, Integer id) {
+
+    	log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+    			" : " + new Object(){}.getClass().getEnclosingMethod().getName());
+
+    	PreparedStatement ps = null;
+    	try {
+    		StringBuilder sql = new StringBuilder();
+    		sql.append("SELECT text FROM messages ");
+    		sql.append("WHERE id = ?");
+
+    		ps = connection.prepareStatement(sql.toString());
+
+    		ps.setInt(1, id);
+
+    		ResultSet rs = ps.executeQuery();
+
+			String text = rs;
+			return text;
     	} catch (SQLException e) {
     		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
     		throw new SQLRuntimeException(e);

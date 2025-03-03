@@ -77,6 +77,12 @@
 						pattern="yyyy/MM/dd HH:mm:ss" />
 				</div>
 				<c:if test="${ not empty loginUser && loginUser.id == message.userId}">
+					<form action="edit">
+						<input type="submit" value="編集">
+						<input name="message_id" value="${message.id}" type="hidden">
+					</form>
+				</c:if>
+				<c:if test="${ not empty loginUser && loginUser.id == message.userId}">
 					<form action="deletemessage" method="post">
 						<input type="submit" value="削除">
 						<input name="message_id" value="${message.id}" type="hidden">
