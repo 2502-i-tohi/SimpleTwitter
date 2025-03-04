@@ -142,7 +142,7 @@ public class MessageService {
 		}
 	}
 
-	public void edit(Message message) {
+	public void edit(Message message, String messageId) {
 
 		log.info(new Object() {
 		}.getClass().getEnclosingClass().getName() +
@@ -152,7 +152,13 @@ public class MessageService {
 		Connection connection = null;
 		try {
 			connection = getConnection();
-			new MessageDao().edit(connection, message);
+
+			Integer id = null;
+			if (!StringUtils.isEmpty(messageId)) {
+				id = Integer.parseInt(messageId);
+			}
+
+			new MessageDao().edit(connection, message, id);
 			commit(connection);
 		} catch (RuntimeException e) {
 			rollback(connection);
@@ -169,7 +175,7 @@ public class MessageService {
 		}
 	}
 
-	public String selectedit(String messageId) {
+	public List<Message> selectEdit(String messageId) {
 
 		log.info(new Object() {
 		}.getClass().getEnclosingClass().getName() +
@@ -185,10 +191,10 @@ public class MessageService {
 				id = Integer.parseInt(messageId);
 			}
 
-			String text = new MessageDao().selectedit(connection, id);
+			List<Message> textEdit = new MessageDao().selectEdit(connection, id);
 			commit(connection);
 
-			return text;
+			return textEdit;
 		} catch (RuntimeException e) {
 			rollback(connection);
 			log.log(Level.SEVERE, new Object() {

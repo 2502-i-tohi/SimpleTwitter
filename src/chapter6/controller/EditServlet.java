@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringUtils;
 
 import chapter6.beans.Message;
-import chapter6.beans.User;
 import chapter6.logging.InitApplication;
 import chapter6.service.MessageService;
 
@@ -46,9 +45,9 @@ public class EditServlet extends HttpServlet {
 				" : " + new Object() {
 				}.getClass().getEnclosingMethod().getName());
 
-		//edit.jspに送る処理（メッセージIDをDaoまで運んでセレクトしたメッセージ内容${message.text}をedit.jspに返す）
+		//edit.jspに送る処理（メッセージIDをDaoまで運んでセレクトしたデータ(textとid)をedit.jspに返す）
 		String messageId = request.getParameter("message_id");
-		String message = new MessageService().selectedit(messageId);
+		List<Message> message = new MessageService().selectEdit(messageId);
 
 		request.setAttribute("message", message);
 		request.getRequestDispatcher("edit.jsp").forward(request, response);
@@ -74,10 +73,9 @@ public class EditServlet extends HttpServlet {
         Message message = new Message();
         message.setText(text);
 
-        User user = (User) session.getAttribute("loginUser");
-        message.setUserId(user.getId());
+		String messageId = request.getParameter("message_id");
 
-        new MessageService().edit(message);
+        new MessageService().edit(message,messageId);
         response.sendRedirect("./");
     }
 

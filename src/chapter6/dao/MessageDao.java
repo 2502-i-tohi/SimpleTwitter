@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -89,7 +91,7 @@ public class MessageDao {
     	}
     }
 
-    public void edit(Connection connection, Message message) {
+    public void edit(Connection connection, Message message, Integer id) {
 
     	log.info(new Object(){}.getClass().getEnclosingClass().getName() +
     			" : " + new Object(){}.getClass().getEnclosingMethod().getName());
@@ -104,7 +106,7 @@ public class MessageDao {
     		ps = connection.prepareStatement(sql.toString());
 
     		ps.setString(1, message.getText());
-    		ps.setInt(2, message.getUserId());
+    		ps.setInt(2, id);
 
     		ps.executeUpdate();
     	} catch (SQLException e) {
@@ -115,7 +117,7 @@ public class MessageDao {
     	}
     }
 
-    public String selectedit(Connection connection, Integer id) {
+    public List<Message> selectEdit(Connection connection, Integer id) {
 
     	log.info(new Object(){}.getClass().getEnclosingClass().getName() +
     			" : " + new Object(){}.getClass().getEnclosingMethod().getName());
@@ -123,7 +125,7 @@ public class MessageDao {
     	PreparedStatement ps = null;
     	try {
     		StringBuilder sql = new StringBuilder();
-    		sql.append("SELECT text FROM messages ");
+    		sql.append("SELECT id, text FROM messages ");
     		sql.append("WHERE id = ?");
 
     		ps = connection.prepareStatement(sql.toString());
@@ -132,8 +134,8 @@ public class MessageDao {
 
     		ResultSet rs = ps.executeQuery();
 
-			String text = rs;
-			return text;
+			List<Message> textEdit = toMessages(rs);
+			return textEdit;
     	} catch (SQLException e) {
     		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
     		throw new SQLRuntimeException(e);
@@ -141,4 +143,26 @@ public class MessageDao {
     		close(ps);
     	}
     }
+
+    private List<Message> toMessages(ResultSet rs) throws SQLException {
+
+		log.info(new Object() {
+		}.getClass().getEnclosingClass().getName() +
+				" : " + new Object() {
+				}.getClass().getEnclosingMethod().getName());
+
+		List<Message> messages = new ArrayList<Message>();
+		try {
+			while (rs.next()) {
+				Message message = new Message();
+				message.setId(rs.getInt("id"));
+				message.setText(rs.getString("text"));
+
+				messages.add(message);
+			}
+			return messages;
+		} finally {
+			close(rs);
+		}
+	}
 }
