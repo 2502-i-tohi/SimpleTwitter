@@ -96,7 +96,7 @@ public class MessageDao {
 		}
 	}
 
-	public void edit(Connection connection, Message message, Integer id) {
+	public void edit(Connection connection, Message message) {
 
 		log.info(new Object() {
 		}.getClass().getEnclosingClass().getName() +
@@ -106,14 +106,15 @@ public class MessageDao {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
-			sql.append("UPDATE messages ");
-			sql.append("SET text = ? ");
+			sql.append("UPDATE messages SET ");
+			sql.append("text = ?, ");
+			sql.append("updated_date = CURRENT_TIMESTAMP ");
 			sql.append("WHERE id = ?");
 
 			ps = connection.prepareStatement(sql.toString());
 
 			ps.setString(1, message.getText());
-			ps.setInt(2, id);
+			ps.setInt(2, message.getId());
 
 			ps.executeUpdate();
 		} catch (SQLException e) {

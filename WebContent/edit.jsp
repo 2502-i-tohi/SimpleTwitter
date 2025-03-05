@@ -14,11 +14,12 @@
 
 		<form action="edit" method="post">
 			つぶやき<br />
-			<textarea name="text" cols="100" rows="5" class="tweet-box"><c:out
-					value="${message.text}" /></textarea>
-			<br /> <input type="submit" value="更新"> <input
-				name="message_id" value="${message.id}" type="hidden"><br />
-			<a href="./">戻る</a>
+			<textarea name="text" cols="100" rows="5" class="tweet-box"><c:out value="${message.text}" />
+			</textarea>
+			<br />
+			<input type="submit" value="更新">
+			<input name="message_id" value="${message.id}" type="hidden">
+			<br /><a href="./">戻る</a>
 		</form>
 
 		<div class="copyright">Copyright(c)Dohee Lee</div>

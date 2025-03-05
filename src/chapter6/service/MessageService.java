@@ -142,7 +142,7 @@ public class MessageService {
 		}
 	}
 
-	public void edit(Message message, String messageId) {
+	public void edit(Message message) {
 
 		log.info(new Object() {
 		}.getClass().getEnclosingClass().getName() +
@@ -152,13 +152,7 @@ public class MessageService {
 		Connection connection = null;
 		try {
 			connection = getConnection();
-
-			Integer id = null;
-			if (!StringUtils.isEmpty(messageId)) {
-				id = Integer.parseInt(messageId);
-			}
-
-			new MessageDao().edit(connection, message, id);
+			new MessageDao().edit(connection, message);
 			commit(connection);
 		} catch (RuntimeException e) {
 			rollback(connection);
@@ -191,16 +185,10 @@ public class MessageService {
 				id = Integer.parseInt(messageId);
 			}
 
-			if (id == null) {
-				return null;
-			}
-
 			Message textEdit = new MessageDao().selectEdit(connection, id);
 			commit(connection);
 
 			return textEdit;
-		} catch (NumberFormatException e) {
-			return null;
 		} catch (RuntimeException e) {
 			rollback(connection);
 			log.log(Level.SEVERE, new Object() {
