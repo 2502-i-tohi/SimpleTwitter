@@ -33,7 +33,6 @@ public class EditServlet extends HttpServlet {
 	public EditServlet() {
 		InitApplication application = InitApplication.getInstance();
 		application.init();
-
 	}
 
 	@Override
@@ -48,7 +47,7 @@ public class EditServlet extends HttpServlet {
 		//edit.jspに送る処理（メッセージIDをDaoまで運んでセレクトしたデータ(textとid)をedit.jspに返す）
 		String messageId = request.getParameter("message_id");
 
-		if (!messageId.matches("^[0-9]*$") || StringUtils.isBlank(messageId)) {
+		if (StringUtils.isBlank(messageId) || !messageId.matches("^[0-9]*$")) {
 			HttpSession session = request.getSession();
 			List<String> errorMessages = new ArrayList<String>();
 			errorMessages.add("不正なパラメータが入力されました");

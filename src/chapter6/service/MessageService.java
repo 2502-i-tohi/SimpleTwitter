@@ -30,7 +30,6 @@ public class MessageService {
 	public MessageService() {
 		InitApplication application = InitApplication.getInstance();
 		application.init();
-
 	}
 
 	public void insert(Message message) {

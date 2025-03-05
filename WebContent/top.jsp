@@ -89,6 +89,16 @@
 						<input name="message_id" value="${message.id}" type="hidden">
 					</form>
 				</c:if>
+				<br />
+				<div class="comments">
+					<form action="comment" method="post">
+						<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea>
+						<br />
+						<input type="submit" value="返信">
+						<input name="message_id" value="${message.id}" type="hidden">
+					</form>
+				</div>
+				<br />
 			</div>
 		</c:forEach>
 	</div>

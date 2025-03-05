@@ -35,7 +35,6 @@ public class MessageServlet extends HttpServlet {
     public MessageServlet() {
         InitApplication application = InitApplication.getInstance();
         application.init();
-
     }
 
 
