@@ -117,7 +117,7 @@ public class MessageDao {
     	}
     }
 
-    public List<Message> selectEdit(Connection connection, Integer id) {
+    public Message selectEdit(Connection connection, Integer id) {
 
     	log.info(new Object(){}.getClass().getEnclosingClass().getName() +
     			" : " + new Object(){}.getClass().getEnclosingMethod().getName());
@@ -135,7 +135,11 @@ public class MessageDao {
     		ResultSet rs = ps.executeQuery();
 
 			List<Message> textEdit = toMessages(rs);
-			return textEdit;
+			if (textEdit.isEmpty()) {
+				return null;
+			} else {
+				return textEdit.get(0);
+			}
     	} catch (SQLException e) {
     		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
     		throw new SQLRuntimeException(e);

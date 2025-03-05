@@ -175,7 +175,7 @@ public class MessageService {
 		}
 	}
 
-	public List<Message> selectEdit(String messageId) {
+	public Message selectEdit(String messageId) {
 
 		log.info(new Object() {
 		}.getClass().getEnclosingClass().getName() +
@@ -191,10 +191,16 @@ public class MessageService {
 				id = Integer.parseInt(messageId);
 			}
 
-			List<Message> textEdit = new MessageDao().selectEdit(connection, id);
+			if (id == null) {
+				return null;
+			}
+
+			Message textEdit = new MessageDao().selectEdit(connection, id);
 			commit(connection);
 
 			return textEdit;
+		} catch (NumberFormatException e) {
+			return null;
 		} catch (RuntimeException e) {
 			rollback(connection);
 			log.log(Level.SEVERE, new Object() {
