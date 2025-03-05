@@ -48,7 +48,7 @@ public class EditServlet extends HttpServlet {
 		//edit.jspに送る処理（メッセージIDをDaoまで運んでセレクトしたデータ(textとid)をedit.jspに返す）
 		String messageId = request.getParameter("message_id");
 
-		if (!messageId.matches("^[0-9]*$") || messageId == "") {
+		if (!messageId.matches("^[0-9]*$") || StringUtils.isBlank(messageId)) {
 			HttpSession session = request.getSession();
 			List<String> errorMessages = new ArrayList<String>();
 			errorMessages.add("不正なパラメータが入力されました");
@@ -81,13 +81,12 @@ public class EditServlet extends HttpServlet {
 				" : " + new Object() {
 				}.getClass().getEnclosingMethod().getName());
 
-		HttpSession session = request.getSession();
 		List<String> errorMessages = new ArrayList<String>();
 
 		String text = request.getParameter("text");
 		if (!isValid(text, errorMessages)) {
-			session.setAttribute("errorMessages", errorMessages);
-			response.sendRedirect("./");
+			request.setAttribute("errorMessages", errorMessages);
+			request.getRequestDispatcher("edit.jsp").forward(request, response);
 			return;
 		}
 

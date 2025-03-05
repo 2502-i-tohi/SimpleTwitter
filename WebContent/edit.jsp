@@ -10,6 +10,20 @@
 <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+	<div class="header">
+		<a href="./">ホーム</a>
+		<a href="setting">設定</a>
+		<a href="logout">ログアウト</a>
+	</div>
+	<c:if test="${ not empty errorMessages }">
+		<div class="errorMessages">
+			<ul>
+				<c:forEach items="${errorMessages}" var="errorMessage">
+					<li><c:out value="${errorMessage}" />
+				</c:forEach>
+			</ul>
+		</div>
+	</c:if>
 	<div class="main-contents">
 
 		<form action="edit" method="post">
