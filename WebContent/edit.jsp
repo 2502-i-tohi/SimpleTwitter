@@ -10,10 +10,13 @@
 <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+<div class="main-contents">
 	<div class="header">
-		<a href="./">ホーム</a>
-		<a href="setting">設定</a>
-		<a href="logout">ログアウト</a>
+		<c:if test="${ not empty loginUser }">
+			<a href="./">ホーム</a>
+			<a href="setting">設定</a>
+			<a href="logout">ログアウト</a>
+		</c:if>
 	</div>
 	<c:if test="${ not empty errorMessages }">
 		<div class="errorMessages">
@@ -24,7 +27,6 @@
 			</ul>
 		</div>
 	</c:if>
-	<div class="main-contents">
 
 		<form action="edit" method="post">
 			つぶやき<br />
@@ -37,6 +39,6 @@
 		</form>
 
 		<div class="copyright">Copyright(c)Dohee Lee</div>
-	</div>
+</div>
 </body>
 </html>
