@@ -66,8 +66,7 @@
 						href="./?user_id=<c:out value="${message.userId}"/> "> <c:out
 								value="${message.account}" />
 					</a>
-					</span>
-					<span class="name"><c:out value="${message.name}" /></span>
+					</span> <span class="name"><c:out value="${message.name}" /></span>
 				</div>
 				<div class="text">
 					<pre><c:out value="${message.text}" /></pre>
@@ -76,16 +75,18 @@
 					<fmt:formatDate value="${message.createdDate}"
 						pattern="yyyy/MM/dd HH:mm:ss" />
 				</div>
-				<c:if test="${ not empty loginUser && loginUser.id == message.userId}">
+				<c:if
+					test="${ not empty loginUser && loginUser.id == message.userId}">
 					<form action="edit">
-						<input type="submit" value="編集">
-						<input name="message_id" value="${message.id}" type="hidden">
+						<input type="submit" value="編集"> <input name="message_id"
+							value="${message.id}" type="hidden">
 					</form>
 				</c:if>
-				<c:if test="${ not empty loginUser && loginUser.id == message.userId}">
+				<c:if
+					test="${ not empty loginUser && loginUser.id == message.userId}">
 					<form action="deletemessage" method="post">
-						<input type="submit" value="削除">
-						<input name="message_id" value="${message.id}" type="hidden">
+						<input type="submit" value="削除"> <input name="message_id"
+							value="${message.id}" type="hidden">
 					</form>
 				</c:if>
 			</div>

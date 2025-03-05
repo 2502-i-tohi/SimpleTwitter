@@ -40,7 +40,7 @@ public class DeleteMessageServlet extends HttpServlet {
 
 		String messageId = request.getParameter("message_id");
 
-        new MessageService().delete(messageId);
-        response.sendRedirect("./");
+		new MessageService().delete(messageId);
+		response.sendRedirect("./");
 	}
 }
