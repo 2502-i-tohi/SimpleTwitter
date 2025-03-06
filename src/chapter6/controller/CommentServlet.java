@@ -46,22 +46,22 @@ public class CommentServlet extends HttpServlet {
 				}.getClass().getEnclosingMethod().getName());
 
 		//ここの処理を考える
-        HttpSession session = request.getSession();
-        List<String> errorMessages = new ArrayList<String>();
+		HttpSession session = request.getSession();
+		List<String> errorMessages = new ArrayList<String>();
 
-        String text = request.getParameter("text");
-        if (!isValid(text, errorMessages)) {
-            session.setAttribute("errorMessages", errorMessages);
-            response.sendRedirect("./");
-            return;
-        }
+		String text = request.getParameter("text");
+		if (!isValid(text, errorMessages)) {
+			session.setAttribute("errorMessages", errorMessages);
+			response.sendRedirect("./");
+			return;
+		}
 
-        Comment comment = new Comment();
-        User user = (User) session.getAttribute("loginUser");
+		Comment comment = new Comment();
+		User user = (User) session.getAttribute("loginUser");
 
-        comment.setText(text);
-        comment.setUserId(user.getId());
-        comment.setMessageId(Integer.parseInt(request.getParameter("message_id")));
+		comment.setText(text);
+		comment.setUserId(user.getId());
+		comment.setMessageId(Integer.parseInt(request.getParameter("message_id")));
 
 		new CommentService().insert(comment);
 		response.sendRedirect("./");
@@ -69,18 +69,20 @@ public class CommentServlet extends HttpServlet {
 
 	private boolean isValid(String text, List<String> errorMessages) {
 
-		  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-	        " : " + new Object(){}.getClass().getEnclosingMethod().getName());
+		log.info(new Object() {
+		}.getClass().getEnclosingClass().getName() +
+				" : " + new Object() {
+				}.getClass().getEnclosingMethod().getName());
 
-	        if (StringUtils.isBlank(text)) {
-	            errorMessages.add("メッセージを入力してください");
-	        } else if (140 < text.length()) {
-	            errorMessages.add("140文字以下で入力してください");
-	        }
+		if (StringUtils.isBlank(text)) {
+			errorMessages.add("メッセージを入力してください");
+		} else if (140 < text.length()) {
+			errorMessages.add("140文字以下で入力してください");
+		}
 
-	        if (errorMessages.size() != 0) {
-	            return false;
-	        }
-	        return true;
-	    }
+		if (errorMessages.size() != 0) {
+			return false;
+		}
+		return true;
+	}
 }

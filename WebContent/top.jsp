@@ -49,8 +49,9 @@
 		<c:remove var="errorMessages" scope="session" />
 	</c:if>
 	<form action="./">
-		日付：<input type="date" name="start" value="${start}">
-		～ <input type="date" name="end" value="${end}">
+		日付：
+		<input type="date" name="start" value="${start}"> ～
+		<input type="date" name="end" value="${end}">
 		<input type="submit" value="絞込">
 	</form>
 	<div class="form-area">
