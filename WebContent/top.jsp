@@ -48,7 +48,11 @@
 		</div>
 		<c:remove var="errorMessages" scope="session" />
 	</c:if>
-
+	<form action="./">
+		日付：<input type="date" name="start">
+		～ <input type="date" name="end">
+		<input type="submit" value="絞込">
+	</form>
 	<div class="form-area">
 		<c:if test="${ isShowMessageForm }">
 			<form action="message" method="post">
@@ -91,14 +95,30 @@
 				</c:if>
 				<br />
 				<div class="comments">
-					<form action="comment" method="post">
-						<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea>
-						<br />
-						<input type="submit" value="返信">
-						<input name="message_id" value="${message.id}" type="hidden">
-					</form>
+					<c:if test="${ not empty loginUser }">
+						<form action="comment" method="post">
+							<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea>
+							<br />
+							<input type="submit" value="返信">
+							<input name="message_id" value="${message.id}" type="hidden">
+						</form>
+					</c:if>
 				</div>
-				<br />
+				<c:forEach items="${comments}" var="comment">
+					<c:if test="${ message.id == comment.messageId }">
+						<div class="account-name">
+							<span class="account"><c:out value="${comment.account}" /></span>
+							<span class="name"><c:out value="${comment.name}" /></span>
+						</div>
+						<div class="text">
+							<pre><c:out value="${comment.text}" /></pre>
+						</div>
+						<div class="date">
+							<fmt:formatDate value="${comment.createdDate}"
+							pattern="yyyy/MM/dd HH:mm:ss" />
+						</div>
+					</c:if>
+				</c:forEach>
 			</div>
 		</c:forEach>
 	</div>
