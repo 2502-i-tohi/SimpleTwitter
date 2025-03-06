@@ -96,7 +96,7 @@ public class CommentDao {
 			sql.append("FROM comments ");
 			sql.append("INNER JOIN users ");
 			sql.append("ON comments.user_id = users.id ");
-			sql.append("ORDER BY created_date DESC limit " + num);
+			sql.append("ORDER BY created_date limit " + num);
 
 			ps = connection.prepareStatement(sql.toString());
 
