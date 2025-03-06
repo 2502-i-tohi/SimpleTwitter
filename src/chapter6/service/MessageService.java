@@ -107,7 +107,7 @@ public class MessageService {
 			if (end == null || end == "") {
 				end = defaultEnd;
 			} else {
-				end += " 00:00:00";
+				end += " 23:59:59";
 			}
 
 			List<UserMessage> messages = new UserMessageDao().select(connection, id, LIMIT_NUM, start, end);
