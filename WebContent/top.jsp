@@ -11,6 +11,7 @@
 <link href="./css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+<div class="main-contents">
 	<div class="header">
 		<c:if test="${ empty loginUser }">
 			<a href="login">ログイン</a>
@@ -48,7 +49,7 @@
 		</div>
 		<c:remove var="errorMessages" scope="session" />
 	</c:if>
-	<form action="./">
+	<form action="./" method="get">
 		日付：
 		<input type="date" name="start" value="${start}"> ～
 		<input type="date" name="end" value="${end}">
@@ -124,5 +125,6 @@
 		</c:forEach>
 	</div>
 	<div class="copyright">Copyright(c)DoheeLee</div>
+</div>
 </body>
 </html>

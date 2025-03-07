@@ -99,12 +99,12 @@ public class MessageService {
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String defaultEnd = format.format(nowDate);
 
-			if (start == null || start == "") {
+			if (StringUtils.isBlank(start)) {
 				start = defaultStart;
 			} else {
 				start += " 00:00:00";
 			}
-			if (end == null || end == "") {
+			if (StringUtils.isBlank(end)) {
 				end = defaultEnd;
 			} else {
 				end += " 23:59:59";

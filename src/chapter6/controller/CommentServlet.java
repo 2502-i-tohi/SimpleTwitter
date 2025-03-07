@@ -45,7 +45,6 @@ public class CommentServlet extends HttpServlet {
 				" : " + new Object() {
 				}.getClass().getEnclosingMethod().getName());
 
-		//ここの処理を考える
 		HttpSession session = request.getSession();
 		List<String> errorMessages = new ArrayList<String>();
 

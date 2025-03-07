@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import chapter6.beans.User;
+
 @WebFilter(urlPatterns = { "/setting", "/edit" })
 public class LoginFilter implements Filter {
 
@@ -23,7 +25,7 @@ public class LoginFilter implements Filter {
 			throws IOException, ServletException {
 
 		HttpSession session = ((HttpServletRequest) request).getSession(false);
-		Object loginUser = session.getAttribute("loginUser");
+		User loginUser = (User) session.getAttribute("loginUser");
 
 		if (loginUser != null) {
 			chain.doFilter(request, response);
